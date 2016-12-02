@@ -83,7 +83,10 @@ export default class App extends Component {
 
   showError(errorMsg) {
     $('#errorBox').text("Error: " + errorMsg).show();
-  }
+	  setTimeout(function() {
+	          $('#errorBox').fadeOut();
+	      }, 3000);
+	  }
 
   showView(reactViewComponent) {
     ReactDOM.render(reactViewComponent,
@@ -114,10 +117,14 @@ export default class App extends Component {
     this.showView(<RegisterView onsubmit={this.register.bind(this)} />);
   }
 
-  register(username, password) {
-    KinveyRequester.registerUser(username, password)
+  register(username, password, confirmPassword, email) {
+      if(password === confirmPassword && password.length >= 5) {
+    KinveyRequester.registerUser(username, password, confirmPassword, email)
         .then(registerSuccess.bind(this));
+      }else {
 
+          this.showError("Non equal passwords")
+      }
     function registerSuccess(userInfo) {
       this.saveAuthInSession(userInfo);
       this.showAdsView();
