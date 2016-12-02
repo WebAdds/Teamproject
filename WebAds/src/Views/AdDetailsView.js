@@ -6,7 +6,7 @@ export default class AdDetailsView extends Component {
         let ad = this.props.ad;
         let adRow = (
             <div>
-                    <div><img src={ad.image}></img></div>
+                    <div><img src={ad.image} role="presentation" /></div>
                     <div>{ad.title}</div>
                     <div>{ad.description}</div>
                     <div>{ad.author}</div>
