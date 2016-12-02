@@ -17,7 +17,6 @@ export default class NavigationBar extends Component {
         let username = this.props.username;
         if (username == null) { // No user logged in
             return (
-                <div className="tab-content">
                 <div className="container">
                 <header id="menu">
                     <ul className="nav nav-tabs" id="navMenu">
@@ -38,7 +37,7 @@ export default class NavigationBar extends Component {
 
                 </header>
                 </div>
-                </div>
+
 
             );
 
@@ -49,20 +48,20 @@ export default class NavigationBar extends Component {
                 <div className="container">
                 <header id="menu">
                     <ul class="nav nav-tabs" id="navMenu">
-                        <li> <a onClick="quotes()" data-toggle="tab" className="tooltip" title="Main page of site" href="#" id="linkHome">
+                        <li> <a onClick={this.props.homeClicked} data-toggle="tab" className="tooltip" title="Main page of site" href="#" id="linkHome">
                             <span><img className="topMenuIcons" src={require("./media/earth-grid.png")} alt="home" /></span>
                             HOME
                         </a></li>
                         <li> <a data-toggle="tab" className="tooltip" title="In this section are all your posts" href="#" id="linkMyAdds">
                             <span><img className="topMenuIcons" src={require("./media/speech-bubble.png")} alt="my advertisments" /></span>
                             MY ADVERTISMENTS</a></li>
-                        <li> <a data-toggle="tab" className="tooltip" title="Here are advertisment from you and all other users" href="#" id="linkListAdds">
+                        <li> <a onClick={this.props.adsClicked} data-toggle="tab" className="tooltip" title="Here are advertisment from you and all other users" href="#" id="linkListAdds">
                             <span><img className="topMenuIcons" src={require("./media/speech-bubbles.png")} alt="all advertisments" /></span>
                             ALL ADVERTISMENTS</a></li>
-                        <li> <a data-toggle="tab" className="tooltip" title="From here you can create new advertisment. Come on. Try it." href="#" id="linkCreateAdd">
+                        <li> <a onClick={this.props.createAdClicked} data-toggle="tab" className="tooltip" title="From here you can create new advertisment. Come on. Try it." href="#" id="linkCreateAdd">
                             <span><img className="topMenuIcons" src={require("./media/speaking.png")} alt="new advertisments" /></span>
                             NEW ADVERTISMENT</a></li>
-                        <li> <a data-toggle="tab" className="tooltip" title="Exit from your profil" href="#" id="linkLogout">
+                        <li> <a onClick={this.props.logoutClicked} data-toggle="tab" className="tooltip" title="Exit from your profil" href="#" id="linkLogout">
                             <span><img className="topMenuIcons" src={require("./media/communication.png")} alt="logout" /></span>
                             LOGOUT</a></li>
                     </ul>
