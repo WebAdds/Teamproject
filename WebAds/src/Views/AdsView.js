@@ -6,7 +6,7 @@ export default class AdsView extends Component {
 
             <div key={ad._id}>
                 <a href="#" onClick={this.props.adDetailsClicked.bind(this, ad._id)}>
-                    <div><img src={ad.image}></img></div>
+                    <div><img src={ad.image} alt="" /></div>
                     <div>{ad.title}</div>
                     <div>{ad.description}</div>
                     <div>{ad.author}</div>
