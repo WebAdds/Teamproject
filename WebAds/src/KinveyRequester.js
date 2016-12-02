@@ -2,8 +2,8 @@ import $ from 'jquery';
 
 const KinveyRequester = (function() {
     const baseUrl = "https://baas.kinvey.com/";
-    const appKey = "kid_H1aq14Os";
-    const appSecret = "329525a861524b64b93bc9c41250b4cf";
+    const appKey = "kid_By8VsYafl";
+    const appSecret = "f2c86d0fc986412ea22b9ca6296fb0e9";
     const kinveyAppAuthHeaders = {
         'Authorization': "Basic " + btoa(appKey + ":" + appSecret),
     };
@@ -56,21 +56,21 @@ const KinveyRequester = (function() {
         });
     }
 
-    function createAd(title, author, description) {
+    function createAd(title, author, description, image) {
         return $.ajax({
             method: "POST",
             url: baseUrl + "appdata/" + appKey + "/ads",
             headers: getKinveyUserAuthHeaders(),
-            data: { title, author, description }
+            data: { title, author, description, image }
         });
     }
 
-    function editAd(adId, title, author, description) {
+    function editAd(adId, title, author, description, image) {
         return $.ajax({
             method: "PUT",
             url: baseUrl + "appdata/" + appKey + "/ads/" + adId,
             headers: getKinveyUserAuthHeaders(),
-            data: { title, author, description }
+            data: { title, author, description, image }
         });
     }
 

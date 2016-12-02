@@ -174,13 +174,14 @@ export default class App extends Component {
               title={adInfo.title}
               author={adInfo.author}
               description={adInfo.description}
+	      image={adInfo.image}
           />
       );
     }
   }
 
-  editAd(adId, title, author, description) {
-    KinveyRequester.editAd(adId, title, author, description)
+  editAd(adId, title, author, description, image) {
+    KinveyRequester.editAd(adId, title, author, description, image)
         .then(editAdsuccess.bind(this));
 
     function editAdsuccess() {
@@ -201,6 +202,7 @@ export default class App extends Component {
               title={adInfo.title}
               author={adInfo.author}
               description={adInfo.description}
+              image={adInfo.image}
           />
       );
     }
@@ -220,8 +222,8 @@ export default class App extends Component {
     this.showView(<CreateAdView onsubmit={this.createAd.bind(this)} />);
   }
 
-  createAd(title, author, description) {
-    KinveyRequester.createAd(title, author, description)
+  createAd(title, author, description, image) {
+    KinveyRequester.createAd(title, author, description, image)
         .then(createAdsuccess.bind(this));
 
     function createAdsuccess() {

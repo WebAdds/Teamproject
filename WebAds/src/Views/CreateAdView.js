@@ -20,6 +20,11 @@ export default class CreateAdView extends Component {
                     <textarea name="description" rows="10"
                         ref={e => this.descriptionField = e} />
                 </label>
+		<label>
+                    <div>Image:</div>
+                    <input type="text" name="image" required
+                           ref={e => this.imageField = e} />
+                </label>
                 <div>
                     <input type="submit" value="Create" />
                 </div>
@@ -33,6 +38,7 @@ export default class CreateAdView extends Component {
             this.titleField.value,
             this.authorField.value,
             this.descriptionField.value,
+	    this.imageField.value,
         );
     }
 }
