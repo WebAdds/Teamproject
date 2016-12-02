@@ -11,6 +11,7 @@ import CreateAdView from './Views/CreateAdView';
 import EditAdView from './Views/EditAdView';
 import DeleteAdView from './Views/DeleteAdView';
 import AdsView from './Views/AdsView';
+import AdDetailsView from './Views/AdDetailsView';
 
 import KinveyRequester from './KinveyRequester';
 import $ from 'jquery';
@@ -164,8 +165,28 @@ export default class App extends Component {
               userId={this.state.userId}
               editAdClicked={this.prepareAdForEdit.bind(this)}
               deleteAdClicked={this.confirmAdDelete.bind(this)}
+              adDetailsClicked={this.showAdDetailsView.bind(this)}
           />
       );
+    }
+  }
+
+  showAdDetailsView(adId) {
+        KinveyRequester.findAdById(adId)
+            .then(loadAdSuccess.bind(this));
+
+        function loadAdSuccess(ad) {
+            this.showInfo("Ad loaded.");
+
+            this.showView(
+                <AdDetailsView
+                    ad={ad}
+                    userId={this.state.userId}
+                    editAdClicked={this.prepareAdForEdit.bind(this)}
+                    deleteAdClicked={this.confirmAdDelete.bind(this)}
+                />
+            );
+            console.log("yes")    
     }
   }
 

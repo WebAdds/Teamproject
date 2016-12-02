@@ -5,31 +5,17 @@ export default class AdsView extends Component {
         let adRows = this.props.ads.map(ad =>
 
             <div key={ad._id}>
-		<div><img src={ad.image} alt="image"></img></div>
-                <div>{ad.title}</div>
-                <div>{ad.author}</div>
-                <div>{ad.description}</div>
-                {this.getActions(ad, this.props.userId)}
+                <a href="#" onClick={this.props.adDetailsClicked.bind(this, ad._id)}>
+                    <div><img src={ad.image}></img></div>
+                    <div>{ad.title}</div>
+                    <div>{ad.description}</div>
+                    <div>{ad.author}</div>
+                </a>
             </div>
         );
 
         return (
             <div className="ads-view">{adRows}</div>
         );
-    }
-
-    getActions(ad, userId) {
-        if (ad._acl.creator === userId)
-            return (
-                 <div>
-                    <input type="button" value="Edit"
-                        onClick={this.props.editAdClicked.bind(this, ad._id)} />
-                    &nbsp;
-                    <input type="button" value="Delete"
-                       onClick={this.props.deleteAdClicked.bind(this, ad._id)} />
-               </div>
-            );
-        else
-            return <td></td>;
     }
 }
