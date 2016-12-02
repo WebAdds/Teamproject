@@ -14,14 +14,7 @@ export default class AdsView extends Component {
         );
 
         return (
-            <div className="ads-view">
-
- 
-
-                        {adRows}
-
-
-            </div>
+            <div className="ads-view">{adRows}</div>
         );
     }
 

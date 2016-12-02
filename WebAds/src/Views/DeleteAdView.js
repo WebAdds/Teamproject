@@ -20,6 +20,11 @@ export default class DeleteAdView extends Component {
                     <textarea name="description" rows="10" disabled
                               defaultValue={this.props.description} />
                 </label>
+                <label>
+                    <div>Image:</div>
+                    <input type="text" name="image" disabled
+                           defaultValue={this.props.image} />
+                </label>
                 <div>
                     <input type="submit" value="Delete" />
                 </div>

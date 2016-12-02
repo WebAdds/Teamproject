@@ -23,6 +23,12 @@ export default class EditAdView extends Component {
                               defaultValue={this.props.description}
                               ref={e => this.descriptionField = e} />
                 </label>
+		<label>	
+                    <div>Image:</div>
+                    <input type="text" name="image" required
+                           defaultValue={this.props.image}
+                           ref={e => this.imageField = e} />
+                </label>
                 <div>
                     <input type="submit" value="Edit" />
                 </div>
@@ -37,6 +43,7 @@ export default class EditAdView extends Component {
             this.titleField.value,
             this.authorField.value,
             this.descriptionField.value,
+            this.imageField.value,
         );
     }
 }
