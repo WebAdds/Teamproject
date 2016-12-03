@@ -2,8 +2,10 @@
 }
 
 #infoBox, #errorBox, #loadingBox {
-  width: 80%;
-  margin: 10px auto;
+  width: 62%;
+  /*margin: 10px auto;*/
+  margin-left: 271px;
+  margin-top: 10px;
   color: white;
   text-align: center;
   padding: 5px;
@@ -21,6 +23,7 @@
 #errorBox {
   background: #F50;
 }
+
 
 #main {
   margin: 0 10px 20px 10px;
