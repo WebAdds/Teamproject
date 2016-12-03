@@ -176,14 +176,6 @@ section#viewHome p{
 }
 
 
-#infobox, #errorBox, #loadingBox{
-    width: 80%;
-    margin: 10px auto;
-    text-align: center;
-    padding: 5px;
-    border-radius: 3px;
-}
-
 footer{
     margin-top: 10%;
     color: #7CB3E9;
