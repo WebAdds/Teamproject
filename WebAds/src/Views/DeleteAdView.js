@@ -26,7 +26,7 @@ export default class DeleteAdView extends Component {
                            defaultValue={this.props.image} />
                 </label>
                 <div>
-                    <input type="submit" value="Delete" />
+                    <input type="submit" className="submitButton" value="Delete" />
                 </div>
             </form>
         );
