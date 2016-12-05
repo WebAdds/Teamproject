@@ -5,7 +5,7 @@ function registerUser(username, password, confirmPassword, email) {
     return $.ajax({
         method: "POST",
         url: requester.baseUrl + "user/" + requester.appKey + "/",
-        headers: requester.headers,
+        headers: requester.kinveyAppAuthHeaders,
         data: { username, password, confirmPassword, email }
     });
 }
