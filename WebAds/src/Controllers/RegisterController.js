@@ -9,6 +9,7 @@ function showRegisterView() {
 
 function register(username, password, confirmPassword, email) {
     if(password === confirmPassword && password.length >= 5) {
+        confirmPassword = '';
     registerUser(username, password, confirmPassword, email)
         .then(registerSuccess.bind(this));
     }else {
