@@ -2,7 +2,7 @@ import requester from './requester'
 import $ from 'jquery'
 
 function createMessage(author, email, title, description, adAuthor) {
-    let date = Date.now();
+    let date = new Date();
     return $.ajax({
         method: "POST",
         url: requester.baseUrl + "appdata/" + requester.appKey + "/messages",
@@ -11,20 +11,20 @@ function createMessage(author, email, title, description, adAuthor) {
     });
 }
 
-function createMessageGuest(author, email, title, description, adAuthor) {
-    let date = Date.now();
+function createMessageGuest(author, email, title, description, adAuthor, adId) {
+    let date = new Date();
     return $.ajax({
         method: "POST",
         url: requester.baseUrl + "appdata/" + requester.appKey + "/messages",
         headers: requester.getGuestUserAuthHeaders(),
-        data: { author, email, title, description, adAuthor, date }
+        data: { author, email, title, description, adAuthor, adId, date }
     });
 }
 
 function findAllMessages() {
     return $.ajax({
         method: "GET",
-        url: requester.baseUrl + "appdata/" + requester.appKey + "/messages",
+        url: requester.baseUrl + "appdata/" + requester.appKey + "/messages?query={}&sort={\"_kmd.lmt\": -1}",
         headers: requester.getKinveyUserAuthHeaders()
     });
 }

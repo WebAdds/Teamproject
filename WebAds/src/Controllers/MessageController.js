@@ -1,6 +1,6 @@
 import React from 'react';
 import {findAllMessages, createMessage, deleteMessage, createMessageGuest} from "../Models/MessageModel";
-import {showAdDetailsView, showAdDetailsViewForNonLoggedUser} from "./AdController";
+import {showAdDetailsView, showAdDetailsGuestView} from "./AdController";
 import MessagesView from '../Views/MessagesView'
 
 function showMessagesView(){
@@ -8,15 +8,6 @@ function showMessagesView(){
         .then(loadMessagesSuccess.bind(this));
 
     function loadMessagesSuccess(messages) {
-        // if (messages.length > 1){
-        //     this.showInfo("You have"+ messages.length +"messages.");
-        // }
-        // if (messages.length === 1){
-        //     this.showInfo("You have 1 message.");
-        // }else{
-        //     this.showInfo("Non have messages.");
-        // }
-
         this.showView(
             <MessagesView
                 messages={messages}
@@ -32,25 +23,21 @@ function createMess(author, email, title, description, adAuthor, adId) {
         .then(createMessageSuccess.bind(this));
 
     function createMessageSuccess() {
+        showAdDetailsView.bind(this)(adId);
         this.showInfo("Message was send successful.");
-        showAdDetailsView(adId);
-
 
 
 
     }
 }
 
-function createMessageForNonLoggedUser(author, email, title, description, adAuthor, adId) {
+function createMessageFromGuest(author, email, title, description, adAuthor, adId) {
     createMessageGuest(author, email, title, description, adAuthor)
         .then(createMessageSuccess.bind(this));
 
     function createMessageSuccess() {
-        this.showInfo("Message was send successful.")
-        showAdDetailsViewForNonLoggedUser(adId);
-        ;
-
-
+        showAdDetailsGuestView.bind(this)(adId);
+        this.showInfo("Message was send successful.");
 
     }
 }
@@ -61,7 +48,7 @@ function deleteMess(messId){
         .then(deleteMessageSuccess.bind(this));
 
     function deleteMessageSuccess() {
-        showMessagesView();
+        showMessagesView.bind(this)();
         this.showInfo("Message deleted.");
     }
 }
@@ -69,6 +56,6 @@ function deleteMess(messId){
 export {
     showMessagesView,
     createMess,
-    createMessageForNonLoggedUser,
+    createMessageFromGuest,
     deleteMess
 }

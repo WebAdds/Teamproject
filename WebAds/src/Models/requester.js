@@ -9,6 +9,6 @@ const requester = {
     getGuestUserAuthHeaders: function () {
         return {'Authorization': "Kinvey " + "7dde5e2b-6e82-4d12-b78d-235ba55389f6.hX0A7f35I0F5+/UvTxqw8OHU0+YTOx7BgcPOCfN8duA="}
     }
-}
+};
 
 export default requester;

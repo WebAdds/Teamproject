@@ -13,7 +13,7 @@ function login(username, password) {
 
     function loginSuccess(userInfo) {
         this.saveAuthInSession(userInfo);
-        showHomeView.bind(this)()
+        showHomeView.bind(this)();
         this.showInfo("Login successful.");
     }
 }

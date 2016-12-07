@@ -4,14 +4,14 @@ import DeleteAdView from '../Views/DeleteAdView';
 import MyAdsView from '../Views/MyAdsView';
 import AdDetailsView from '../Views/AdDetailsView';
 import AdDetailsWithFormView from '../Views/AdDetailsWithFormView'
-//import {createMessage} from '../Models/MessageModel';
 import AdsView from '../Views/AdsView';
-import AdsViewForNonLoggedUser from '../Views/AdsViewForNonLoggedUser'
-import AdDetailsViewForNonLoggedUser from '../Views/AdDetailsViewForNonLoggedUser'
-import AdDetailsViewFormNonLoggedUser from '../Views/AdDetailsViewFormForNonLoggedUser'
-import {createMessageForNonLoggedUser, createMess} from './MessageController'
+import AdsGuestView from '../Views/AdsGuestView'
+import AdDetailsGuestView from '../Views/AdDetailsGuestView'
+import AdDetailsGuestWithFormView from '../Views/AdDetailsGuestWithFormView'
+import SearchResultsView from  '../Views/SearchResultsView';
+import {createMessageFromGuest, createMess} from './MessageController'
 import React from 'react';
-import {findAdById, createAd, findAllAds, editAd, deleteAd, findAdByIdGuest, findAllAdsGuest} from "../Models/AdModel";
+import {findAdById, createAd, findAllAds, editAd, deleteAd, findAdByIdGuest, findAllAdsGuest, search} from "../Models/AdModel";
 
 
 function showAdsView() {
@@ -24,8 +24,6 @@ function showAdsView() {
             <AdsView
                 ads={ads}
                 userId={this.state.userId}
-                editAdClicked={prepareAdForEdit.bind(this)}
-                deleteAdClicked={confirmAdDelete.bind(this)}
                 adDetailsClicked={showAdDetailsView.bind(this)}
 
             />
@@ -33,52 +31,80 @@ function showAdsView() {
     }
 }
 
-function showAdsViewForNonLoggedUser() {
+function showAdDetailsView(adId) {
+    findAdById(adId).then(loadAdSuccess.bind(this));
+    function loadAdSuccess(ad) {
+        this.showInfo("Ad loaded.");
+        this.showView(
+            <AdDetailsView
+                ad={ad}
+                userId={this.state.userId}
+                editAdClicked={prepareAdForEdit.bind(this)}
+                deleteAdClicked={confirmAdDelete.bind(this)}
+                sendMessagesClicked={showAdDetailsWithFormView.bind(this)}
+            />
+        );
+    }
+}
+
+function showAdDetailsWithFormView(adId) {
+    findAdById(adId).then(loadAdSuccess.bind(this));
+    function loadAdSuccess(ad) {
+        this.showInfo("Write message.");
+        this.showView(
+            <AdDetailsWithFormView
+                ad={ad}
+                userId={this.state.userId}
+                onsubmit={createMess.bind(this)}
+            />
+        );
+    }
+}
+
+function showAdsGuestView() {
     findAllAdsGuest()
         .then(loadAdsSuccess.bind(this));
 
     function loadAdsSuccess(ads) {
         this.showInfo("Ads loaded.");
         this.showView(
-            <AdsViewForNonLoggedUser
+            <AdsGuestView
                 ads={ads}
                 userId={this.state.userId}
-                adDetailsClickedForNonLoggedUser={showAdDetailsViewForNonLoggedUser.bind(this)}
+                adDetailsGuestClicked={showAdDetailsGuestView.bind(this)}
 
             />
         );
     }
 }
 
-function showAdDetailsViewForNonLoggedUser(adId) {
-        findAdByIdGuest(adId).then(loadAdSuccess.bind(this));
-        function loadAdSuccess(ad) {
-            this.showInfo("Ad loaded.");
+function showAdDetailsGuestView(adId) {
+    findAdByIdGuest(adId).then(loadAdSuccess.bind(this));
+    function loadAdSuccess(ad) {
+        this.showInfo("Ad loaded.");
 
-            this.showView(
-                <AdDetailsViewForNonLoggedUser
-                    ad={ad}
-                    userId={this.state.userId}
-                    sendMessagesClicked={showAdDetailsViewFormNonLoggedUser.bind(this)}
-                />
-            );
-        }
+        this.showView(
+            <AdDetailsGuestView
+                ad={ad}
+                userId={this.state.userId}
+                sendMessagesClicked={showAdDetailsGuestWithFormView.bind(this, ad._id)}
+            />
+        );
     }
+}
 
-function showAdDetailsViewFormNonLoggedUser(adId) {
-   findAdByIdGuest(adId).then(loadAdSuccess.bind(this));
-        function loadAdSuccess(ad) {
-            this.showInfo("Ad loaded.");
-
-            this.showView(
-                <AdDetailsViewFormNonLoggedUser
-                    ad={ad}
-                    userId={this.state.userId}
-                    onsubmit={createMessageForNonLoggedUser.bind(this)}
-                />
-            );
-        }
+function showAdDetailsGuestWithFormView(adId) {
+    findAdByIdGuest(adId).then(loadAdSuccess.bind(this));
+    function loadAdSuccess(ad) {
+        this.showView(
+            <AdDetailsGuestWithFormView
+                ad={ad}
+                userId={this.state.userId}
+                onsubmit={createMessageFromGuest.bind(this)}
+            />
+        );
     }
+}
 
 
 function showCreateAdView() {
@@ -90,7 +116,7 @@ function adCreate(category, title, author, description, image) {
         .then(createAdSuccess.bind(this));
 
     function createAdSuccess() {
-        showAdsView();
+        showAdsView.bind(this)();
         this.showInfo("Ad created.");
 
     }
@@ -119,9 +145,17 @@ function adForEdit(adId, category, title, author, description, image) {
     editAd(adId, category, title, author, description, image)
         .then(editAdSuccess.bind(this));
 
-    function editAdSuccess() {
-        showAdsView();
-        this.showInfo("Ad created.");
+    function editAdSuccess(ad) {
+        this.showInfo("Ad edited.");
+        this.showView(
+            <AdDetailsView
+                ad={ad}
+                userId={this.state.userId}
+                editAdClicked={prepareAdForEdit.bind(this)}
+                deleteAdClicked={confirmAdDelete.bind(this)}
+                sendMessagesClicked={showAdDetailsWithFormView.bind(this)}
+            />
+        );
     }
 }
 
@@ -148,10 +182,21 @@ function adDelete(adId) {
         .then(deleteAdSuccess.bind(this));
 
     function deleteAdSuccess() {
-        showAdsView();
         this.showInfo("Ad deleted.");
+        findAllAds().then(loadAdsSuccess.bind(this));
+        function loadAdsSuccess(ads) {
+            this.showView(
+                <AdsView
+                    ads={ads}
+                    userId={this.state.userId}
+                    adDetailsClicked={showAdDetailsView.bind(this)}
+
+                />
+            );
+        }
     }
 }
+
 
 function showMyAdsView() {
     findAllAds()
@@ -170,48 +215,41 @@ function showMyAdsView() {
             />
         );
     }
+
 }
 
-function showAdDetailsView(adId) {
-    findAdById(adId).then(loadAdSuccess.bind(this));
-    function loadAdSuccess(ad) {
-        this.showInfo("Ad loaded.");
-
+function showHomeViewWithSearchResults(keyword) {
+    search(keyword)
+        .then(loadAdsSuccess.bind(this));
+    function loadAdsSuccess(ads) {
+        this.showInfo("Ads loaded.");
         this.showView(
-            <AdDetailsView
-                ad={ad}
-                userId={this.state.userId}
-                editAdClicked={prepareAdForEdit.bind(this)}
-                deleteAdClicked={confirmAdDelete.bind(this)}
-                sendMessagesClicked={showAdDetailsWithFormView.bind(this)}
+            <SearchResultsView
+                ads={ads}
+                username={this.state.username}
+                adDetailsClicked={showAdDetailsView.bind(this)}
             />
         );
+
+
     }
+
 }
 
-function showAdDetailsWithFormView(adId) {
-    findAdById(adId).then(loadAdSuccess.bind(this));
-    function loadAdSuccess(ad) {
-        this.showView(
-            <AdDetailsWithFormView
-                ad={ad}
-                userId={this.state.userId}
-                onsubmit={createMess.bind(this)}
-            />
-        );
-    }
-}
 
 
 export {
     showAdsView,
-    showAdsViewForNonLoggedUser,
+    showAdsGuestView,
     showMyAdsView,
     showCreateAdView,
     showAdDetailsView,
-    showAdDetailsViewForNonLoggedUser,
+    showAdDetailsGuestView,
     showAdDetailsWithFormView,
-    showAdDetailsViewFormNonLoggedUser
+    showAdDetailsGuestWithFormView,
+    showHomeViewWithSearchResults,
+    prepareAdForEdit,
+    confirmAdDelete
 }
 
 

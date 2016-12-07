@@ -1,50 +1,52 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
 export default class EditAdView extends Component {
     render() {
         return (
-            <form className="edit-ad-form" onSubmit={this.submitForm.bind(this)}>
-                <h1>Edit Ad</h1>
-                <label>
-                    <div>Category:</div>
-                    <select name="category" required defaultValue={this.props.category}
-                            ref={e => this.categoryField = e} >
-                        <option value="Автомобили">Автомобили</option>
-                        <option value="Бусове">Бусове</option>
-                        <option value="Мотори">Мотори</option>
-                        <option value="Камиони">Камиони</option>
-                        <option value="Други">Други</option>
-                    </select>
-                    <br/><br/>
-                </label>
-                <label>
-                    <div>Title:</div>
-                    <input type="text" name="title" required
-                           defaultValue={this.props.title}
-                           ref={e => this.titleField = e} />
-                </label>
-                <label>
-                    <div>Author:</div>
-                    <input type="text" name="author" required
-                           defaultValue={this.props.author}
-                           ref={e => this.authorField = e} />
-                </label>
-                <label>
-                    <div>Description:</div>
-                    <textarea name="description" rows="10"
-                              defaultValue={this.props.description}
-                              ref={e => this.descriptionField = e} />
-                </label>
-                <label>
-                    <div>Image:</div>
-                    <input type="text" name="image" required
-                           defaultValue={this.props.image}
-                           ref={e => this.imageField = e} />
-                </label>
-                <div>
-                    <input type="submit" className="submitButton" value="Edit" />
-                </div>
-            </form>
+            <div className="container">
+
+                <form className="create-ad-form form-group" onSubmit={this.submitForm.bind(this)}>
+                    <h1>Create new Ad</h1>
+                    <label>
+                        <div>Category:</div>
+                        <select className="form-control" name="category" ref={e => this.categoryField = e}>
+                            <option value="cars">Cars</option>
+                            <option value="motorcycles">Motorcycles</option>
+                            <option value="buses">Buses</option>
+                            <option value="trucks">Trucks</option>
+                            <option value="agricultural">Agricultural</option>
+                        </select>
+                    </label><br/>
+                    <label>
+                        <div>Title:</div>
+                        <input className="form-control" type="text" name="title" required
+                               defaultValue={this.props.title}
+                               ref={e => this.titleField = e} />
+                    </label><br/>
+                    <label>
+                        <div>Author:</div>
+                        <input className="form-control" type="text" name="author" required
+                               defaultValue={this.props.author}
+                               ref={e => this.authorField = e} />
+                    </label><br/>
+                    <label>
+                        <div>Description:</div>
+                        <textarea className="form-control" name="description" rows="10" cols="50"
+                                  defaultValue={this.props.description}
+                                  ref={e => this.descriptionField = e} />
+                    </label><br />
+                    <label>
+                        <div>Image:</div>
+                        <input type="text" name="image" cols="10"
+                               defaultValue={this.props.image}
+                               ref={e => this.imageField = e} />
+                    </label><br />
+                    <div>
+                        <input type="submit" className="submitButton btn btn-primary" value="Edit" />
+                    </div>
+                </form>
+            </div>
         );
     }
 

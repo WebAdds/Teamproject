@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import './App.css';
 import NavigationBar from './NavigationBar';
 import Footer from './Footer';
 import showRegisterView from '../Controllers/RegisterController'
-import {showAdsView, showCreateAdView, showAdsViewForNonLoggedUser} from '../Controllers/AdController';
+import {showAdsView, showCreateAdView, showAdsGuestView, showMyAdsView, showHomeViewWithSearchResults} from '../Controllers/AdController';
 import showLoginView from '../Controllers/LoginController'
 import showHomeView from '../Controllers/HomeController'
-import {showMyAdsView} from '../Controllers/AdController'
 import {showMessagesView} from '../Controllers/MessageController'
 import logout from '../Controllers/LogoutController'
 import $ from 'jquery';
+import './App.css';
 
 export default class App extends Component {
     constructor(props) {
@@ -23,28 +22,29 @@ export default class App extends Component {
 
     render() {
         return (
-           <div className="App">
-               <header>
-                   <NavigationBar
-                       username={this.state.username}
-                       homeClicked={showHomeView.bind(this)}
-                       allAdsClicked={showAdsView.bind(this)}
-                       adsClickedForNonLoggedUser={showAdsViewForNonLoggedUser.bind(this)}
-                       createAdClicked={showCreateAdView.bind(this)}
-                       myAdsClicked={showMyAdsView.bind(this)}
-                       messagesClicked={showMessagesView.bind(this)}
-                       loginClicked={showLoginView.bind(this)}
-		               registerClicked={showRegisterView.bind(this)}
-		               logoutClicked={logout.bind(this)}
-                   />
-                   <div id="loadingBox">Loading ...</div>
-                   <div id="infoBox">Info</div>
-                   <div id="errorBox">Error</div>
-               </header>
-               <main id="main"></main>
-               <Footer />
-           </div>
-       )
+            <div className="App">
+                <header>
+                    <NavigationBar
+                        username={this.state.username}
+                        homeClicked={showHomeView.bind(this)}
+                        adsClicked={showAdsView.bind(this)}
+                        adsClickedGuest={showAdsGuestView.bind(this)}
+                        createAdClicked={showCreateAdView.bind(this)}
+                        myAdsClicked={showMyAdsView.bind(this)}
+                        messagesClicked={showMessagesView.bind(this)}
+                        onsubmit={showHomeViewWithSearchResults.bind(this)}
+                        loginClicked={showLoginView.bind(this)}
+                        registerClicked={showRegisterView.bind(this)}
+                        logoutClicked={logout.bind(this)}
+                    />
+                    <div id="loadingBox">Loading ...</div>
+                    <div id="infoBox">Info</div>
+                    <div id="errorBox">Error</div>
+                </header>
+                <main id="main"></main>
+                <Footer />
+            </div>
+        )
     }
 
     componentDidMount() {
@@ -84,8 +84,8 @@ export default class App extends Component {
     showError(errorMsg) {
         $('#errorBox').text("Error: " + errorMsg).show();
         setTimeout(function() {
-          $('#errorBox').fadeOut();
-      }, 3000);
+            $('#errorBox').fadeOut();
+        }, 3000);
     }
 
     showView(reactViewComponent) {
@@ -105,4 +105,6 @@ export default class App extends Component {
             userId: userInfo._id
         });
     }
+
+
 }

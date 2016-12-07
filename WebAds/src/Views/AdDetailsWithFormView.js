@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import '../Components/App.css';
+import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
 export default class AdDetailsWithFormView extends Component {
     render() {
@@ -13,36 +14,35 @@ export default class AdDetailsWithFormView extends Component {
                 <div>{ad.title}</div>
                 <div>{ad.description}</div>
                 <div>{ad.author}</div>
-                <div>{ad.date}</div>
                 </div>
-            <div>
-                <form className="messages-form" onSubmit={this.submitForm.bind(this)}>
-                    <label>
-                        <div>Author:</div>
-                        <input type="text" name="author" required
-                               ref={e => this.authorField = e} />
-                    </label>
-                    <label>
-                        <div>Email:</div>
-                        <input type="email" name="email"
-                               ref={e => this.emailField = e} />
-                    </label>
-                    <label>
-                        <div>Title:</div>
-                        <input type="text" name="title" required
-                               ref={e => this.titleField = e} />
-                    </label>
-                    <label>
-                        <div>Description:</div>
-                        <input type="text" name="description" required
-                               ref={e => this.descriptionField = e} />
-                    </label>
+                <div className="messagesDiv">
+                    <form className="messages-form" onSubmit={this.submitForm.bind(this)}>
+                        <label>
+                            <div><span className="label label-warning">Author:</span></div>
+                            <input className="form-control" type="text" name="author" required
+                                   ref={e => this.authorField = e} />
+                        </label><br/>
+                        <label>
+                            <div><span className="label label-warning">Email:</span></div>
+                            <input className="form-control" type="email" name="email"
+                                   ref={e => this.emailField = e} />
+                        </label><br/>
+                        <label>
+                            <div><span className="label label-warning">Title:</span></div>
+                            <input className="form-control" type="text" name="title" required
+                                   ref={e => this.titleField = e} />
+                        </label><br/>
+                        <label>
+                            <div><span className="label label-warning">Description</span></div>
+                            <textarea className="form-control" name="description" rows="6" cols="50" required
+                                   ref={e => this.descriptionField = e} />
+                        </label><br/>
 
-                    <div>
-                        <input type="submit" className="submitButton" value="Send Message" />
-                    </div>
-                </form>
-            </div>
+                        <div>
+                            <input type="submit" className="submitButton btn btn-primary" value="Send Message" />
+                        </div>
+                    </form>
+                </div>
             </div>
 
 

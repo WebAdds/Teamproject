@@ -5,7 +5,7 @@ function logout() {
     logoutUser();
     sessionStorage.clear();
     this.setState({username: null, userId: null});
-    showHomeView.bind(this)()
+    showHomeView.bind(this)();
     this.showInfo('Logout successful.');
 }
 

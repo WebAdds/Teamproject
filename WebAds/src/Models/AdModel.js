@@ -2,11 +2,11 @@ import requester from './requester'
 import $ from 'jquery'
 
 function createAd(category, title, author, description, image) {
-    let date = Date.now();
+    let date = new Date();
     return $.ajax({
         method: "POST",
         url: requester.baseUrl + "appdata/" + requester.appKey + "/ads",
-        headers: requester.kinveyAppAuthHeaders,
+        headers: requester.getKinveyUserAuthHeaders(),
         data: { category, title, author, description, image, date }
     });
 
@@ -31,7 +31,7 @@ function findAdById(adId) {
 function findAllAdsGuest() {
     return $.ajax({
         method: "GET",
-        url: requester.baseUrl + "appdata/" + requester.appKey + "/ads",
+        url: requester.baseUrl + "appdata/" + requester.appKey + "/ads?query={}&sort={\"_kmd.lmt\": -1}",
         headers: requester.getGuestUserAuthHeaders()
     });
 }
@@ -39,7 +39,7 @@ function findAllAdsGuest() {
 function findAllAds() {
     return $.ajax({
         method: "GET",
-        url: requester.baseUrl + "appdata/" + requester.appKey + "/ads",
+        url: requester.baseUrl + "appdata/" + requester.appKey + "/ads?query={}&sort={\"_kmd.lmt\": -1}",
         headers: requester.getKinveyUserAuthHeaders()
     });
 }
@@ -61,6 +61,17 @@ function deleteAd(adId) {
     });
 }
 
+function search(keyword) {
+
+    return $.ajax({
+        method: "GET",
+        url: requester.baseUrl + "appdata/" + requester.appKey + `/ads/?query={"$or":[{"category":{"$regex":"^${keyword}"}},{"title":{"$regex":"^${keyword}"}},{"author":{"$regex":"^${keyword}"}}, {"description":{"$regex":"^${keyword}"}},
+            {"image":{"$regex":"^${keyword}"}}]}`,
+        headers: requester.getKinveyUserAuthHeaders()
+    });
+
+}
+
 export {
     createAd,
     findAdByIdGuest,
@@ -68,5 +79,6 @@ export {
     findAllAdsGuest,
     findAllAds,
     editAd,
-    deleteAd
+    deleteAd,
+    search
 }
